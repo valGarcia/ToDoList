@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void checkItem(View view) {
         CheckBox clicked = (CheckBox) view;
+
         TextView listItemText = (TextView)findViewById(R.id.list_item_text);
         Log.d("checkItem:", "listItemText: " + listItemText);
         String text = (String) listItemText.getText();
@@ -70,4 +71,25 @@ public class MainActivity extends AppCompatActivity{
             listItems.add(0, text);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("listItems", listItems);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle inState){
+        super.onRestoreInstanceState(inState);
+        listItems = inState.getStringArrayList("listItems");
+        myadapter = new ArrayAdapter<String>(
+                this,
+                R.layout.checkboxlist,
+                R.id.list_item_text,
+                listItems);
+
+
+    }
 }
+
